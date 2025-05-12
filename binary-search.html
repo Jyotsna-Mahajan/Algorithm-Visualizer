@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Binary Search Visualizer</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      width: 100%;
+      background-color: #14b8a6;
+      padding: 20px 30px;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .toolbar {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #2dd4bf;
+      border-radius: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      animation: slideDown 1s ease;
+    }
+
+    input, button {
+      padding: 10px 14px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    button {
+      background-color: #0f766e;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #0e7490;
+    }
+
+    .bar-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      height: 300px;
+      margin-top: 40px;
+      padding: 20px;
+      flex-wrap: wrap;
+    }
+
+    .bar {
+      width: 30px;
+      margin: 0 4px;
+      background: #d1d5db;
+      color: #111827;
+      border-radius: 4px 4px 0 0;
+      text-align: center;
+      font-weight: bold;
+      transition: all 0.4s ease;
+    }
+
+    .bar.active {
+      background-color: #3b82f6;
+      color: white;
+    }
+
+    .bar.middle {
+      background-color: #10b981;
+      color: white;
+    }
+
+    .bar.found {
+      background-color: #22c55e;
+      color: white;
+    }
+
+    #error, #result {
+      font-size: 16px;
+      margin-top: 15px;
+    }
+
+    #error {
+      color: red;
+    }
+
+    #result {
+      font-weight: bold;
+      color: white;
+    }
+
+    
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .bar {
+        width: 20px;
+        margin: 0 2px;
+        font-size: 12px;
+      }
+
+      .toolbar {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>Binary Search Visualizer</header>
+
+  <div class="toolbar">
+    <input type="text" id="arrayInput" placeholder="Enter sorted array e.g. 10,20,30" />
+    <input type="number" id="targetInput" placeholder="Target element" />
+    <button onclick="startBinarySearch()">Search</button>
+    <button onclick="resetVisualizer()">Reset</button>
+    <!-- <button onclick="location.href='sort.html'">Go to Sort Visualizer</button> -->
+     <button onclick="location.href='index.html'">Home</button>
+  </div>
+
+  <div id="error"></div>
+  <div id="result"></div>
+
+  <div class="bar-container" id="bars"></div>
+
+  <script>
+    const barsContainer = document.getElementById("bars");
+    const errorDiv = document.getElementById("error");
+    const resultDiv = document.getElementById("result");
+
+    function drawBars(array, { activeRange = [], mid = null, found = false }) {
+      barsContainer.innerHTML = "";
+      const maxVal = Math.max(...array);
+      array.forEach((val, idx) => {
+        const bar = document.createElement("div");
+        bar.classList.add("bar");
+        const height = (val / maxVal) * 250;
+        bar.style.height = `${height}px`;
+        bar.textContent = val;
+
+        if (found && idx === mid) {
+          bar.classList.add("found");
+        } else if (idx === mid) {
+          bar.classList.add("middle");
+        } else if (activeRange.includes(idx)) {
+          bar.classList.add("active");
+        }
+
+        barsContainer.appendChild(bar);
+      });
+    }
+
+    async function binarySearch(array, left, right, target) {
+      if (right >= left) {
+        const mid = Math.floor((left + right) / 2);
+        drawBars(array, { activeRange: range(left, right), mid });
+        await delay(1000);
+
+        if (array[mid] === target) {
+          drawBars(array, { mid, found: true });
+          resultDiv.textContent = `✅ Element found at index ${mid + 1}`;
+          return;
+        } else if (array[mid] > target) {
+          return binarySearch(array, left, mid - 1, target);
+        } else {
+          return binarySearch(array, mid + 1, right, target);
+        }
+      } else {
+        resultDiv.textContent = "❌ Element not found.";
+      }
+    }
+
+    function range(start, end) {
+      const res = [];
+      for (let i = start; i <= end; i++) res.push(i);
+      return res;
+    }
+
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function startBinarySearch() {
+      errorDiv.textContent = "";
+      resultDiv.textContent = "";
+
+      let arr = document.getElementById("arrayInput").value
+        .split(",")
+        .map(x => parseInt(x.trim()))
+        .filter(n => !isNaN(n));
+
+      const target = parseInt(document.getElementById("targetInput").value);
+
+      if (!arr.length || isNaN(target)) {
+        errorDiv.textContent = "⚠️ Please enter a valid array and target element.";
+        return;
+      }
+
+      arr.sort((a, b) => a - b);
+      drawBars(arr, {});
+      binarySearch(arr, 0, arr.length - 1, target);
+    }
+
+    function resetVisualizer() {
+      document.getElementById("arrayInput").value = "";
+      document.getElementById("targetInput").value = "";
+      barsContainer.innerHTML = "";
+      errorDiv.textContent = "";
+      resultDiv.textContent = "";
+    }
+  </script>
+  
+</body>
+</html>

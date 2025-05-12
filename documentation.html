@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Documentation | Sorting & Binary Search</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      /* background: linear-gradient(to right, #74ebd5, #acb6e5); */
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      margin: 0;
+      padding: 0;
+      color: #2c3e50;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2em;
+      position: relative;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5em;
+      color: white;
+      text-shadow: 1px 1px 2px #ccc;
+    }
+
+    .qa-card {
+      background: #fff;
+      margin-bottom: 1.5em;
+      padding: 1.5em;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .qa-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .question {
+      font-size: 1.2rem;
+      color: #2980b9;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .question i {
+      margin-right: 10px;
+      color: #3498db;
+    }
+
+    .answer {
+      background: #ecf9ff;
+      padding: 1em;
+      border-left: 6px solid #3498db;
+      border-radius: 6px;
+    }
+
+    ul {
+      margin: 10px 0 10px 20px;
+    }
+
+    code {
+      background-color: #f1f1f1;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      color: #d35400;
+    }
+
+    .home-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #3498db;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transition: background 0.3s ease;
+      z-index: 999;
+    }
+
+    .home-btn:hover {
+      background-color: #2980b9;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 1em;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .home-btn {
+        padding: 8px 14px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Home Button -->
+  <a href="index.html" class="home-btn"><i class="fas fa-home"></i> Home</a>
+
+  <div class="container">
+    <!-- Inside the <div class="container"> -->
+<h1>📘 Documentation</h1>
+
+<div class="qa-card">
+  <div class="question"><i class="fas fa-question-circle"></i>What is Sorting?</div>
+  <div class="answer">
+    Sorting is the process of arranging data in a particular order, such as ascending or descending. It makes searching and analyzing data more efficient.
+  </div>
+</div>
+
+<div class="qa-card">
+  <div class="question"><i class="fas fa-question-circle"></i>What is Bubble Sort?</div>
+  <div class="answer">
+    Bubble Sort compares adjacent elements and swaps them if they are in the wrong order. This process continues until no more swaps are needed. It's simple but inefficient for large datasets.<br>
+    <strong>Time Complexity:</strong> O(n²)
+  </div>
+</div>
+
+<div class="qa-card">
+  <div class="question"><i class="fas fa-question-circle"></i>What is Selection Sort?</div>
+  <div class="answer">
+    Selection Sort selects the smallest (or largest) element from the unsorted part and swaps it with the element at the beginning. This continues until the array is sorted.<br>
+    <strong>Time Complexity:</strong> O(n²)
+  </div>
+</div>
+
+<div class="qa-card">
+  <div class="question"><i class="fas fa-question-circle"></i>What is Insertion Sort?</div>
+  <div class="answer">
+    Insertion Sort builds the sorted array one item at a time by comparing and inserting elements into their correct positions.<br>
+    <strong>Time Complexity:</strong> O(n²), but efficient for small or nearly sorted data.
+  </div>
+</div>
+
+<div class="qa-card">
+  <div class="question"><i class="fas fa-question-circle"></i>What is Merge Sort?</div>
+  <div class="answer">
+    Merge Sort is a divide-and-conquer algorithm that divides the array into halves, sorts them, and merges the sorted halves.<br>
+    <strong>Time Complexity:</strong> O(n log n)
+  </div>
+</div>
+
+<div class="qa-card">
+  <div class="question"><i class="fas fa-question-circle"></i>What is Quick Sort?</div>
+  <div class="answer">
+    Quick Sort selects a pivot, partitions the array around the pivot, and recursively sorts the subarrays.<br>
+    <strong>Average Time Complexity:</strong> O(n log n)<br>
+    <strong>Worst Case:</strong> O(n²)
+  </div>
+</div>
+
+<div class="qa-card">
+  <div class="question"><i class="fas fa-question-circle"></i>What is the Binary Search Algorithm?</div>
+  <div class="answer">
+    Binary Search is an efficient algorithm that finds an item from a sorted list by repeatedly dividing the search interval in half.<br>
+    <ul>
+      <li>Check the middle element.</li>
+      <li>If it's the target, return its index.</li>
+      <li>If target is less, search the left half. Otherwise, search the right.</li>
+    </ul>
+    <strong>Time Complexity:</strong> O(log n)
+  </div>
+</div>
+
+</div>
+
+</body>
+</html>
